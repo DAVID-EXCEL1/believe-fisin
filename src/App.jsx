@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-// Helper component for skill categories - MOVED OUTSIDE App component
+// Helper component for skill categories
 const SkillCategory = ({ title, skills }) => (
     <div className="mb-6">
         <h3 className="text-xl font-semibold text-gray-100 mb-3">{title}</h3>
@@ -16,6 +16,8 @@ const SkillCategory = ({ title, skills }) => (
 
 // Main App component
 const App = () => {
+    const [isMenuOpen, setIsMenuOpen] = useState(false); // State for mobile menu
+
     // Define Believe's data
     const personalData = {
         name: "Believe Fisin",
@@ -72,6 +74,7 @@ const App = () => {
         const targetElement = document.getElementById(targetId);
         if (targetElement) {
             targetElement.scrollIntoView({ behavior: 'smooth' });
+            setIsMenuOpen(false); // Close mobile menu after clicking a link
         }
     };
 
@@ -84,29 +87,57 @@ const App = () => {
             {/* Main container with Inter font */}
             <style>{`
         body {
-            font-family: 'Inter', sans-serif;
+          font-family: 'Inter', sans-serif;
         }
-        `}</style>
+      `}</style>
 
-            {/* Header/Navigation (simple for single page) */}
+            {/* Header/Navigation */}
             <header className="bg-gray-800 shadow-lg py-4 px-6 fixed w-full z-10 top-0">
                 <nav className="container mx-auto flex justify-between items-center">
                     <a href="#home" onClick={(e) => handleSmoothScroll(e, 'home')} className="text-2xl font-bold text-blue-400 rounded-md p-2 hover:bg-gray-700 transition-colors">
                         {personalData.name.split(' ')[0]}
                     </a>
-                    <div className="space-x-4">
+
+                    {/* Desktop Navigation */}
+                    <div className="hidden md:flex space-x-4">
                         <a href="#about" onClick={(e) => handleSmoothScroll(e, 'about')} className="text-gray-300 hover:text-blue-400 font-medium transition-colors">About</a>
                         <a href="#skills" onClick={(e) => handleSmoothScroll(e, 'skills')} className="text-gray-300 hover:text-blue-400 font-medium transition-colors">Skills</a>
                         <a href="#projects" onClick={(e) => handleSmoothScroll(e, 'projects')} className="text-gray-300 hover:text-blue-400 font-medium transition-colors">Projects</a>
                         <a href="#experience" onClick={(e) => handleSmoothScroll(e, 'experience')} className="text-gray-300 hover:text-blue-400 font-medium transition-colors">Experience</a>
                         <a href="#contact" onClick={(e) => handleSmoothScroll(e, 'contact')} className="text-gray-300 hover:text-blue-400 font-medium transition-colors">Contact</a>
                     </div>
+
+                    {/* Mobile Menu Button (Hamburger) */}
+                    <div className="md:hidden">
+                        <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-gray-300 hover:text-blue-400 focus:outline-none">
+                            {isMenuOpen ? (
+                                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            ) : (
+                                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                                </svg>
+                            )}
+                        </button>
+                    </div>
                 </nav>
+
+                {/* Mobile Navigation (Conditional Rendering) */}
+                <div className={`md:hidden ${isMenuOpen ? 'block' : 'hidden'} bg-gray-800 py-2 transition-all duration-300 ease-in-out`}>
+                    <div className="flex flex-col items-center space-y-3">
+                        <a href="#about" onClick={(e) => handleSmoothScroll(e, 'about')} className="text-gray-300 hover:text-blue-400 font-medium w-full text-center py-2">About</a>
+                        <a href="#skills" onClick={(e) => handleSmoothScroll(e, 'skills')} className="text-gray-300 hover:text-blue-400 font-medium w-full text-center py-2">Skills</a>
+                        <a href="#projects" onClick={(e) => handleSmoothScroll(e, 'projects')} className="text-gray-300 hover:text-blue-400 font-medium w-full text-center py-2">Projects</a>
+                        <a href="#experience" onClick={(e) => handleSmoothScroll(e, 'experience')} className="text-gray-300 hover:text-blue-400 font-medium w-full text-center py-2">Experience</a>
+                        <a href="#contact" onClick={(e) => handleSmoothScroll(e, 'contact')} className="text-gray-300 hover:text-blue-400 font-medium w-full text-center py-2">Contact</a>
+                    </div>
+                </div>
             </header>
 
             <main className="pt-20"> {/* Padding to account for fixed header */}
 
-                {/* Hero Section - Updated to match template layout */}
+                {/* Hero Section */}
                 <section id="home" className="relative bg-gradient-to-r from-gray-900 to-blue-900 text-white py-20 md:py-32 flex items-center justify-center min-h-screen-75">
                     <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-8 md:gap-16">
                         {/* Text Content - Left Side */}
@@ -129,9 +160,9 @@ const App = () => {
                         {/* Image - Right Side */}
                         <div className="md:w-1/2 flex justify-center md:justify-end">
                             <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-gray-300 shadow-lg">
-                                {/* Placeholder for Believe's picture */}
+                                {/* Believe's actual picture */}
                                 <img
-                                    src="/believe.jpg"
+                                    src="/believe.jpg" // Replace with the actual path to Believe's picture
                                     alt="Believe Fisin"
                                     className="w-full h-full object-cover"
                                     onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/320x320/2D3748/A0AEC0?text=Photo'; }}
