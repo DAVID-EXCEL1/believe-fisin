@@ -208,15 +208,14 @@ const App = () => {
                                         onError={(e) => { e.target.onerror = null; e.target.src = `https://placehold.co/600x400/2D3748/A0AEC0?text=${encodeURIComponent(project.title.replace(/\s/g, '+'))}`; }}
                                     />
                                     <div className="p-6">
-                                        <h3 className="text-2xl font-semibold text-gray-100 mb-3">{project.title}</h3>
-                                        <p className="text-gray-300 mb-4">{project.description}</p>
+                                        <h3 className="text-2xl font-semibold text-gray-100 mb-3">Data Analytics Project Using SQL</h3>
+                                        <p className="text-gray-300 mb-4">Utilized advanced SQL queries to clean, preprocess, and analyze a complex dataset, uncovering hidden patterns and key relationships that informed strategic decisions. Conducted exploratory data analysis and generated actionable insights by leveraging SQL's analytical functions, improving data-driven decision-making.</p>
                                         <div className="mb-4">
                                             <span className="font-medium text-gray-300">Tools: </span>
-                                            {project.tools.map((tool, idx) => (
-                                                <span key={idx} className="bg-gray-700 text-gray-200 text-xs px-2 py-1 rounded-full mr-1">
-                                                    {tool}
+                                                <span  className="bg-gray-700 text-gray-200 text-xs px-2 py-1 rounded-full mr-1">
+                                                    SQL (MySQL/PostgreSQL), Relational Databases, Data Cleaning, EDA, Analytical Functions
                                                 </span>
-                                            ))}
+                                            
                                         </div>
                                         {(project.githubLink || project.tableauLink) && (
                                             <div className="flex space-x-4">
